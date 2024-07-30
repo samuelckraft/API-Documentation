@@ -1,0 +1,308 @@
+swagger: '2.0'
+
+info: 
+  title: 'E-commerce API'
+  description: 'This is an API to manage an E-commerce application'
+  version: '1.0.0'
+
+host: '127.0.0.1:5000'
+
+schemes: 
+  - 'http'
+consumes:
+  - 'application/json'
+
+produces:
+  - 'application/json'
+
+securityDefinitions:
+  bearerAuth:
+    type: apiKey
+    name: Authorization
+    in: header
+
+paths: 
+  /employees:
+    post:
+      tags:
+        - employees
+      summary: "Employee Endpoint"
+      description: "Endpoint for employee authentication"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Credentials for employees"
+          required: true
+          schema:
+            $ref: "#/definitions/Employees"
+      responses:
+        200:
+          description: "Success"
+          schema: 
+            $ref: "#/definitions/Response"
+          examples:
+            application/json:
+              value:
+                data: {"id": 1, "name": "First Last", "position": "admin"}
+                message: "Data Validated"
+                status: "success"
+        400:
+          description: "Bad request"
+          schema: 
+            $ref: "#/definitions/Error"
+          examples:
+            application/json:
+              value:
+                status: "error"
+                message: "Invalid credentials"
+
+  /products:
+    post:
+      tags:
+        - products
+      summary: "Product Endpoint"
+      description: "Endpoint for product authentication"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Products"
+          required: true
+          schema:
+            $ref: "#/definitions/Products"
+      responses:
+        200:
+          description: "Success"
+          schema: 
+            $ref: "#/definitions/Response"
+          examples:
+            application/json:
+              value:
+                data: {"id": 1, "name": "Product Name", "price": 25.99}
+                message: "Data Validated"
+                status: "success"
+        400:
+          description: "Bad request"
+          schema: 
+            $ref: "#/definitions/Error"
+          examples:
+            application/json:
+              value:
+                status: "error"
+                message: "Invalid credentials"
+
+  /customers:
+    post:
+      tags:
+        - customers
+      summary: "Customers Endpoint"
+      description: "Endpoint for customer authentication"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Customers"
+          required: true
+          schema:
+            $ref: "#/definitions/Customers"
+      responses:
+        200:
+          description: "Success"
+          schema: 
+            $ref: "#/definitions/Response"
+          examples:
+            application/json:
+              value:
+                data: {"id": 1, "name": "First Last", "email": "example@test.com", "phone": "123-354-8888"}
+                message: "Data Validated"
+                status: "success"
+        400:
+          description: "Bad request"
+          schema: 
+            $ref: "#/definitions/Error"
+          examples:
+            application/json:
+              value:
+                status: "error"
+                message: "Invalid credentials"
+
+  /orders:
+    post:
+      tags:
+        - orders
+      summary: "Orders Endpoint"
+      description: "Endpoint for order authentication"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Orders"
+          required: true
+          schema:
+            $ref: "#/definitions/Orders"
+      responses:
+        200:
+          description: "Success"
+          schema: 
+            $ref: "#/definitions/Response"
+          examples:
+            application/json:
+              value:
+                data: {"id": 1, "customer_id": 1, "product_id": 1, "quantity": 20, "total_price": 100}
+                message: "Data Validated"
+                status: "success"
+        400:
+          description: "Bad request"
+          schema: 
+            $ref: "#/definitions/Error"
+          examples:
+            application/json:
+              value:
+                status: "error"
+                message: "Invalid credentials"
+
+  /production:
+    post:
+      tags:
+        - production
+      summary: "Production Endpoint"
+      description: "Endpoint for production authentication"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Production"
+          required: true
+          schema:
+            $ref: "#/definitions/Production"
+      responses:
+        200:
+          description: "Success"
+          schema: 
+            $ref: "#/definitions/Response"
+          examples:
+            application/json:
+              value:
+                data: {"id": 1, "product_id": 1, "quantity_produced": 20, "date_produced": "2024-01-01"}
+                message: "Data Validated"
+                status: "success"
+        400:
+          description: "Bad request"
+          schema: 
+            $ref: "#/definitions/Error"
+          examples:
+            application/json:
+              value:
+                status: "error"
+                message: "Invalid credentials"
+
+definitions: 
+  Employees: 
+    type: "object"
+    properties:
+      username:
+        type: "string"
+        description: "Username"
+      position:
+        type: "string"
+        description: "Position"
+
+    required:
+      - "username"
+      - "position"
+
+  Products: 
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        description: "Name"
+      price:
+        type: "string"
+        description: "Price"
+
+    required:
+      - "name"
+      - "price"
+
+  Production: 
+    type: "object"
+    properties:
+      product_id:
+        type: "int"
+        description: "Product ID"
+      quantity_produced:
+        type: "int"
+        description: "Quantity Produced"
+      date_produced:
+        type: "date"
+        description: "Date Produced"
+
+    required:
+      - "product_id"
+      - "quantity_produced"
+      - "date_produced"
+
+  Orders: 
+    type: "object"
+    properties:
+      customer_id:
+        type: "int"
+        description: "Customer ID"
+      product_id:
+        type: "int"
+        description: "Product ID"
+      quantity:
+        type: "int"
+        description: "Quantity"
+      total_price:
+        type: "int"
+        description: "Total Price"
+
+    required:
+      - "customer_id"
+      - "product_id"
+      - "quantity"
+      - "total_price"
+  
+  Customers: 
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        description: "Name"
+      email:
+        type: "email"
+        description: "Email"
+      phone:
+        type: "phone"
+        description: "Phone"
+
+    required:
+      - "customer_id"
+      - "product_id"
+      - "quantity"
+      - "total_price"
+
+  Response:
+    type: "object"
+    properties:
+      message: 
+        type: "string"
+        description: "Message indicating success or failure"
+
+      status:
+        type: "string"
+        description: "Status of the operation"
+
+    required:
+      - "message"
+
+  Error:
+    type: "object"
+    properties:
+      status:
+        type: "string"
+        description: "Status of the error"
+      message:
+        type: "string"
+        description: "Description of the error"
+    required:
+      - "status"
+      - "message"
